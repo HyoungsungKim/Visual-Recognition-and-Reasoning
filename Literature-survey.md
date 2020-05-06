@@ -37,3 +37,29 @@ With the support set only, we can in principle train a classifier to assign a cl
 - Therefore we aim to ***perform meta-learning on the training set***, in order to extract transferable knowledge that will allow us to perform better few-shot learning on the support set and thus classify the test set more successfully.
 
 An effective way to exploit the training set is to mimic the few-shot learning setting via episode based training, as proposed in [39].
+
+### Model
+
+Our Relation Network (RN) consists of two modules: an embedding module $f_\varphi$ and a relation module $g_\phi$, 
+
+## Interpretability Beyond Feature Attribution: Quantitative Testing with Concept Activation Vectors (TCAV)
+
+The key idea is to view the high-dimensional internal state of a neural net as an aid, not an obstacle. 
+
+### Introduction
+
+***A CAV for a concept is simply a vector in the direction of the values (e.g., activations) of that concept’s set of examples***.
+
+- CAV란 컨셉의 예시 집합의 값의 방향에 있는 벡터
+- In this paper, ***we derive CAVs by training a linear classifier*** between a concept’s examples and random counter examples and then taking the vector orthogonal to the decision boundary. This simple approach is supported by recent work using local linearity.
+- TCAV uses directional derivatives to quantify the model prediction’s sensitivity to an underlying high-level concept, learned by a CAV.
+- We conduct statistical tests where CAVs are randomly re-learned and rejected unless they show a significant and stable correlation with a model output class or state value
+
+### Related work
+
+Meaningful directions can be efficiently learned via simple  linear  classifiers. 
+
+Our work extends this idea and computes directional derivatives along these learned directions in order to ***gather the importance of each direction for a model’s prediction***.
+
+- Using TCAV’s framework, we can conduct hypothesis testing on any concept on the fly (customization) that make sense to the user (accessibility) for a trained network (plug-in readiness) and produce a global explanation for each class
+- 
