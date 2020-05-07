@@ -62,4 +62,65 @@ Meaningful directions can be efficiently learned via simple  linear  classifiers
 Our work extends this idea and computes directional derivatives along these learned directions in order to ***gather the importance of each direction for a model’s prediction***.
 
 - Using TCAV’s framework, we can conduct hypothesis testing on any concept on the fly (customization) that make sense to the user (accessibility) for a trained network (plug-in readiness) and produce a global explanation for each class
-- 
+
+### Methods
+
+Idea
+
+1.  How to use directional derivatives to quantify the sensitivity of ML model predictions for different user-defined concepts
+2. How to compute a final quantitative explanation ($TCAV_Q$ measure) of the relative importance of each concept to each model prediction class, without any model retraining or modification.
+
+#### User-defined Concepts as Sets of Examples
+
+***The first step in our method is to define a concept of interest***. 
+
+- We do this simply by choosing a set of examples that represent this concept or find an independent data set with the concept labeled.
+- The key benefit of this strategy is that it does not restrict model interpretations to explanations using only pre-existing features, labels, or training data of the model under inspection.
+- Instead, there is great flexibility for even non-expert ML model analysts to define concepts using examples and explore and refine concepts as they test hypotheses during analysis.
+- Section 4 describes results from experiments ***with small number of images (30) collected using a search engine***. For the case of fairness analysis (e.g.,  gender,  protected groups), curated examples are readily available.
+
+### Concept Activation Vectors(CAVs)
+
+We then define a “concept activation vector” (or CAV) as the normal(법선) to a hyperplane separating examples without a concept and examples with a concept in the model’s activations 
+
+### Statistical significance testing
+
+***One pitfall with the TCAV technique is the potential for learning a meaningless CAV***. After all, using a randomly chosen set of images will still produce a CAV. A test based on such a random concept is unlikely to be meaningful.
+
+To guard against spurious(가짜의) results from testing a class against a particular CAV, we propose the following simple statistical significance test.
+
+- Instead of training a CAV once, against a single batch of random examples N, we perform multiple training runs, typically 500.
+- A meaningful concept should lead to TCAV scores that behave consistently across training runs.
+
+Concretely we perform a two-sided $t$-test of the TCAV scores based on these multiple samples.
+
+- If we can reject the null hypothesis of a TCAV score of 0.5, we can consider the resulting concept as related to the class prediction in a significant way.
+- Note that we also perform a Bonferroni correction for our hypotheses (at $p < α/m$ with m= 2) to control the false discovery rate further. All results shown in this paper are CAVs that passed this testing
+
+### TCAV extensions: Relative TCAV
+
+Relative CAVs allow making such fine-grained comparisons. Here the analyst selects two sets of inputs that represent two different concepts, C and D. 
+
+## Prototypical network for Few-shot Learning
+
+Matching networks, which uses an attention mechanism over a learned embedding of the labeled set of examples (the support set) to predict classes for the unlabeled points (the query set).
+
+- Matching networks can be interpreted as a weighted nearest-neighbor classifier applied within an embedding space.
+- Notably, this model utilizes sampled mini-batches called episodes during training, where each episode is designed to mimic the few-shot task by sub-sampling classes as well as data points.
+- The use of episodes makes the training problem more faithful to the test environment and thereby improves generalization
+
+Ravi and Larochelle take the episodic training idea further and propose a meta-learning approach to few-shot learning.
+
+- Their approach involves training an LSTM to produce the updates to a classifier, given an episode, such that it will generalize well to a test-set. Here, rather than training a single model over multiple episodes, the LSTM meta-learner learns to train a custom model for each episode.
+
+We attack the problem of few-shot learning by addressing the key issue of overfitting. Our approach, prototypical networks, is based on the idea that there exists an embedding in which points cluster around a single prototype representation for each class
+
+In order to do this, we learn a non-linear mapping of the input into an embedding space using a neural network and take a class’s prototype to be the mean of its support set in the embedding space. 
+
+- Classification is then performed for an embedded query point by simply finding the nearest class prototype.
+- We follow the same approach to tackle zero-shot learning; here each class comes with meta-data giving a high-level description of the class rather than a small number of labeled examples.
+- We therefore learn an embedding of the meta-data into a shared space to serve as the prototype for each class.
+- Classification is performed, as in the few-shot scenario, by finding the nearest class prototype for an embedded query point
+
+### Prototype Networks
+
