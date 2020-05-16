@@ -124,3 +124,18 @@ In order to do this, we learn a non-linear mapping of the input into an embeddin
 
 ### Prototype Networks
 
+## Matching Networks for One Shot Learning
+
+Our framework learns a network that maps a small labeled support set and unlabeled example to its label, obviating the need for fine-tunning to adapt to new class types.
+
+### Introduction
+
+Data augmentation and regularization techniques alleviateoverfitting in low data regimes, but do not solve it.
+
+Many non-parametric models allow novel examples to be rapidly assimilated, whilst not suffering from catastrophic forgetting. Some models in this family (e.g., nearest neighbors) do not require any training but performance depends on the chosen metric
+
+The novelty of our work is twofold:
+
+- At the modeling level, and at the training procedure. We propose Matching Nets (MN), a neural network which uses recent advances in attention and memory that enable rapid learning.
+- Secondly, our training procedure is based on a simple machine learning principle: test and train conditions must match.
+- Thus to train our network to do rapid learning, we train it by showing only a few examples per class, switching the task from minibatch to minibatch, much like how it will be tested when presented with a few examples of a new task.
