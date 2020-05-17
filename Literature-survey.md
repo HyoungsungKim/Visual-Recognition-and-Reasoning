@@ -16,13 +16,23 @@ Effectively extracting a whole joint graph representation to model the entire sc
 
 ## Learning to Compare: Relation Network for Few-Shot Learning
 
+During meta-learning, it learns to learn a deep distance metric to compare a small number of images  within episodes, each of which is designed to simulate the few-shot setting. Once trained, a RN is able to classify images of new classes by computing relation scores between query images and the few examples of each new class without further updating the network.
+
 Data augmentation and regularization techniques can alleviate overfitting in such a limited-data regime, but they do not solve it. 
 
-Therefore contemporary approaches to few-shot learning often decompose training into an auxiliary meta learning phase where transferable knowledge is learned in the form of good initial conditions [10], embeddings or optimization strategies.
+Therefore contemporary approaches to few-shot learning often decompose training into an auxiliary meta learning phase where transferable knowledge is learned in the form of good initial conditions, embeddings or optimization strategies.
+
+> Meta-learning : Learning to learn
 
 Specifically, we propose a two-branch Relation Network(RN) that performs few-shot recognition by learning to compare query images against few-shot labeled sample images.
 
 First an embedding module generates representations of the query and training images. ***Then these embeddings are compared by a relation module that determines*** if they are from matching categories or not.
+
+### Related work
+
+Many of these approaches use a meta-learning or learning-to-learn strategy in the sense that they ***extract some transferable knowledge from a set of auxiliary tasks (meta-learning, learning-to-learn)***, which then helps them to learn the target few-shot problem well ***without suffering from the overfitting*** that might be expected when applying deep models to sparse data problems
+
+Metric-learning based approaches aim to learn a set of projection functions such that when represented in this embedding, images are easy to recognize using simple nearest neighbor or linear classifiers.
 
 ### Problem Definition
 
