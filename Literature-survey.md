@@ -52,6 +52,10 @@ An effective way to exploit the training set is to mimic the few-shot learning s
 
 Our Relation Network (RN) consists of two modules: an embedding module $f_\varphi$ and a relation module $g_\phi$, 
 
+### Why does Relation Network Work?
+
+In contrast to prior work’s fixed metric or fixed features and shallow learned metric, Relation Network can be seen as both learning a deep embedding and learning a deep non-linear metric (similarity function)
+
 ## Interpretability Beyond Feature Attribution: Quantitative Testing with Concept Activation Vectors (TCAV)
 
 The key idea is to view the high-dimensional internal state of a neural net as an aid, not an obstacle. 
